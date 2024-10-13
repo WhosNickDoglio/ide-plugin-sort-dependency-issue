@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
+    id("com.squareup.sort-dependencies") version "0.9"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -31,23 +32,16 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-    testImplementation(libs.junit)
-
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
-        create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
-
-        // Plugin Dependencies. Uses `platformBundledPlugins` property from the gradle.properties file for bundled IntelliJ Platform plugins.
-        bundledPlugins(providers.gradleProperty("platformBundledPlugins").map { it.split(',') })
-
-        // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
-        plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
-
         instrumentationTools()
-        pluginVerifier()
-        zipSigner()
-        testFramework(TestFrameworkType.Platform)
+        androidStudio("2024.2.1.9")
     }
+
+    implementation(libs.junit)
+    api(libs.junit)
+
+    testImplementation(libs.junit)
 }
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
