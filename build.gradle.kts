@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
-    id("com.squareup.sort-dependencies") version "0.9"
+    id("com.squareup.sort-dependencies") version "0.13"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
